@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+/*
+#19485F, 
+#D9E0A4 and 
+#ECE7E2, 
+#4A7766,
+*/
+:root {
+  --foreground: #000;
+  --background: #fff;
+  --heading: #4A7766;
+  --input: #4A7766;
+  --button: var(--input);
+}
+
+.dark {
+  --foreground: #fff;
+  --background: #000;
+  --heading: #fff;
+  --input: #fff;
+  --button: var(--input);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
