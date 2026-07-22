@@ -54,23 +54,37 @@ router.put("/carts/updateCart", async (req, res) => {
         }
         return res.status(409).json({ success: true, message: "Insufficient Quantity", object: null, kind: "error" });
     } catch (error) {
-        console.error("Errorin updating Cart: ", error);
-        return res.status(500).json({ success: true, message: error, object: null, kind: "success" });
+        console.error("Error in updating Cart: ", error);
+        return res.status(500).json({ success: false, message: error, object: null, kind: "success" });
     }
 });
 
 router.get("/carts/:userid", async (req, res) => {
     const { userid } = req.params;
-    console.log("userid: " + userid);
+    console.log("userid: ", userid);
     try {
         let carts = await cartModel.findOne({ userId: userid });
         console.log(carts);
         return res.status(200).json({ success: true, message: "Cart Fetched Successfully", object: carts, kind: "success" });
     } catch (error) {
         console.error("Error in fetching cart: ", error);
-        return res.status(500).json({ success: true, message: error, object: null, kind: "success" });
+        return res.status(500).json({ success: false, message: error, object: null, kind: "success" });
     }
+})
 
+router.delete("/carts/:cartid", async (req, res) => {
+    const { cartid } = req.params;
+    console.log("cartid: ", cartid);
+    try {
+        const cart = await cartModel.findByIdAndDelete(cartid);
+        if (!cart) {
+            return res.status(404).json({ success: false, message: "Cart Not Exist to Reset", object: null, kind: "success" });
+        }
+        return res.status(200).json({ success: true, message: "Cart Deleted Successfully", object: null, kind: "success" });
+    } catch (error) {
+        console.error("Error in resetting cart: ", error);
+        return res.status(500).json({ success: false, message: error, object: null, kind: "success" });
+    }
 })
 
 export default router;

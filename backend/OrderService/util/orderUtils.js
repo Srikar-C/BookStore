@@ -1,4 +1,4 @@
-import counterSchema from "../Schemas/counter.schema.js";
+import counterSchema from "../Schema/counter.schema.js";
 
 
 export async function generatedId() {

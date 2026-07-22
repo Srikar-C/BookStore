@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(OrderRouter);
 
 mongoose
-    .connect(process.env.NEXT_PUBLIC_API_Cart || "mongodb://localhost:27017/bookstore-order-service")
+    .connect(process.env.NEXT_PUBLIC_API_Order || "mongodb://localhost:27017/bookstore-order-service")
     .then((response) => {
         console.log("Connected to database");
     })

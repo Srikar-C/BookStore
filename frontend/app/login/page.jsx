@@ -3,7 +3,7 @@
 import { FaUserAlt } from "react-icons/fa";
 import InputBox from "../components/InputBox";
 import { MdOutlinePassword } from "react-icons/md";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SiBookstack } from "react-icons/si";
 import Link from "next/link";
 import useFetch from "../hooks/useFetch";
@@ -30,11 +30,13 @@ export default function Login() {
         passColor: "text-red-400",
     });
 
-    const { user, loadingUser } = useAppContext();
+    const { user, loadingUser, initialize } = useAppContext();
 
-    if (user != null) {
-        router.push("/bookstore");
-    }
+    useEffect(() => {
+        if (!loadingUser && user) {
+            router.replace("/bookstore");
+        }
+    }, [loadingUser, user]);
 
     async function handleLogin() {
         if (isSubmit.current) return;
@@ -74,6 +76,7 @@ export default function Login() {
                 router.replace(`/verify/${result.object.token}`);
             }
             else {
+                await initialize();
                 router.replace("/bookstore");
             }
         }

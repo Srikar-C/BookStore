@@ -32,7 +32,8 @@ export function AppProvider({ children }) {
             setCarts(cartResult.object);
         }
         //Get Books as Per User
-        const books = cartResult.object.books;
+        console.log(cartResult);
+        const books = cartResult.object?.books || [];
         const bookResponse = await useFetch("post", process.env.NEXT_PUBLIC_API_Book, process.env.NEXT_PUBLIC_MAPPING_Book, "", { books }, false);
         const bookResult = bookResponse.data;
         if (bookResult.success) {
@@ -49,7 +50,10 @@ export function AppProvider({ children }) {
     }, [])
 
     return (
-        <AppContext.Provider value={{ user, setUser, theme, setTheme, search, setSearch, books, setBooks, loadingUser, carts, setCarts, cartItems, setCartItems }}>
+        <AppContext.Provider value={{
+            user, setUser, theme, setTheme, search, setSearch, books, setBooks, loadingUser, carts,
+            setCarts, cartItems, setCartItems, initialize
+        }}>
             {children}
         </AppContext.Provider>
     )

@@ -39,7 +39,7 @@ export default function BookStoreNav() {
     }
 
     return (
-        <div className="book-navigation fixed w-full h-[10vh] bg-[color:var(--background)] z-1">
+        <div className="book-navigation fixed w-full bg-[color:var(--background)] z-1">
             <nav className="nav shadow-xs shadow-[color:var(--foreground)] flex justify-between items-center p-2">
                 <Link href="/bookstore" className="left">
                     <Logo />

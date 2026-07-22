@@ -66,4 +66,21 @@ public class BookService {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
+    public ResponseEntity<ResponseDTO> updateBookCount(UserBookCount request) {
+        ResponseDTO response = new ResponseDTO();
+        try {
+            for (BookCount book : request.getBooks()) {
+                Books b = repo.findById(book.getBookId()).orElse(new Books());
+                b.setQuantity(b.getQuantity().subtract(book.getCount()));
+                Books quantityUpdate = repo.save(b);
+                System.out.println("Update Book: " + quantityUpdate.toString());
+            }
+            response = helper.success("Book Updated", null, "success");
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (Exception e) {
+            response = helper.error(e.getMessage(), null, "error");
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+
 }
